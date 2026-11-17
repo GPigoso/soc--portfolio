@@ -5,7 +5,7 @@
 | Handshake start only | `tcp.flags.syn==1 && tcp.flags.ack==0` | The first SYN of each connection |
 | Open ports | `tcp.flags.syn==1 && tcp.flags.ack==1 && ip.addr==203.0.113.50` | Ports that answered SYN, ACK (22, 80, 445, 3389) |
 | Closed ports | `tcp.flags.reset==1` | RST, ACK from many different ports (scan) |
-| SSH brute force | `ip.src==203.0.113.50 && tcp.dstport==22 && tcp.flags.syn==1` | 45 short sessions, then a bigger one |
+| SSH brute force | `ip.src==10.0.0.5 && ip.dst==203.0.113.50 && tcp.flags.reset==1` | 45 short sessions, then a bigger one |
 | Cleartext FTP | `ftp` or `tcp.port==21` | Username and password in plain text |
 | DNS tunneling pattern | `dns.qry.name contains "t-sync-cdn"` | 40 TXT queries with random subdomains |
 | SMB sweep | `ip.src==10.0.0.23 && tcp.dstport==445` | One SYN to 57 hosts, 3 answers |
