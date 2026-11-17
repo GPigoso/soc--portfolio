@@ -40,7 +40,7 @@ An external host (203.0.113.50) scanned 10.0.0.5 and then brute-forced SSH on it
 ## 6. Evidence
 - **FTP in plain text:** packets 292 and 294. Filter: `ftp` or `tcp.port==21`. Username and password visible, server answered "230 Login successful".
 - **Port scan:** packets 299 to 442. Filters: `ip.src==203.0.113.50` and `tcp.flags.reset==1`. Many different ports got RST, ACK (closed). Ports 22, 80, 445 and 3389 answered SYN, ACK (open).
-- **SSH brute force:** packets 443 to 902. Filter: `ip.src==203.0.113.50 && tcp.dstport==22 && tcp.flags.syn==1`. 45 short sessions of about the same size, then one last session of about 4 KB (the others are about 640 bytes).
+- **SSH brute force:** packets 443 to 902. Filter: `ip.src==10.0.0.5 && ip.dst==203.0.113.50 && tcp.flags.reset==1`. 45 short sessions of about the same size, then one last session of about 4 KB (the others are about 640 bytes).
 - **DNS tunneling pattern:** packets 903 to 982. Filter: `dns.qry.name contains "t-sync-cdn"`. 40 TXT queries and 40 answers, regular interval, random subdomains.
 - **SMB sweep:** packets 983 to 1042. Filter: `ip.src==10.0.0.23 && tcp.dstport==445`. 57 hosts probed with one SYN each. 10.0.0.5, 10.0.0.9 and 10.0.0.14 answered SYN, ACK. No final ACK.
 
